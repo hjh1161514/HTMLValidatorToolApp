@@ -5,15 +5,16 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
 import android.net.http.SslError
-import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Environment
+import android.os.Environment.DIRECTORY_DOWNLOADS
 import android.os.Message
 import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import android.webkit.ClientCertRequest
 import android.webkit.HttpAuthHandler
+import android.webkit.JavascriptInterface
 import android.webkit.RenderProcessGoneDetail
 import android.webkit.SafeBrowsingResponse
 import android.webkit.SslErrorHandler
@@ -22,12 +23,20 @@ import android.webkit.WebChromeClient
 import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
-import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import com.example.devwebviewapp.databinding.ActivityWebviewBinding
+import java.io.File
+import java.io.FileOutputStream
+import java.io.OutputStreamWriter
+import java.nio.charset.Charset
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class WebViewActivity : AppCompatActivity() {
     private lateinit var binding: ActivityWebviewBinding
@@ -215,8 +224,8 @@ class WebViewActivity : AppCompatActivity() {
                 }
             }
 
+            addJavascriptInterface(AndroidBridge(), "android")
             loadUrl(HTML_VALIDATOR_TOOL_URL)
-//            addJavascriptInterface(AndroidBridge(), "javascript_object")
 
             fileChooserLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
                 if (result.resultCode == Activity.RESULT_OK) {
@@ -246,5 +255,36 @@ class WebViewActivity : AppCompatActivity() {
 
         if(this::binding.isInitialized)
             binding.webView.destroy()
+    }
+
+    private inner class AndroidBridge {
+        @JavascriptInterface
+        // 검증 결과를 파일로 저장
+        fun downloadLog(message: String) {
+            Log.d("DevWebViewApp", "downloadLog bridge")
+
+            val dateFormat = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault())
+            val currentDateTime = dateFormat.format(Date())
+            val filename = "HTML_Validation_Result_$currentDateTime.txt"
+
+            try {
+                val dir = File(Environment.getExternalStoragePublicDirectory(DIRECTORY_DOWNLOADS).path)
+                if (!dir.exists()) {
+                    Log.d("DevWebViewApp", "Directory does not exist, attempting to create")
+                    dir.mkdirs()
+                }
+
+                val file = File(dir, filename)
+                val fos = FileOutputStream(file)
+                val osw = OutputStreamWriter(fos, Charset.forName("EUC-KR"))
+                osw.write(message)
+                osw.close()
+                Log.d("DevWebViewApp", "File saved successfully")
+                Toast.makeText(this@WebViewActivity, "파일이 정상적으로 저장되었습니다.", Toast.LENGTH_SHORT).show()
+            } catch (e: Exception) {
+                e.printStackTrace()
+                Log.d("DevWebViewApp", "Failed to save file")
+            }
+        }
     }
 }
