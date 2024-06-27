@@ -29,6 +29,7 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.FileProvider
 import com.example.devwebviewapp.databinding.ActivityWebviewBinding
 import java.io.File
 import java.io.FileOutputStream
@@ -250,6 +251,20 @@ class WebViewActivity : AppCompatActivity() {
         }
     }
 
+    private fun openFile(file: File) {
+        val fileUri: Uri = FileProvider.getUriForFile(this@WebViewActivity, "com.example.devwebviewapp.fileprovider", file)
+        val intent = Intent(Intent.ACTION_VIEW)
+        intent.setDataAndType(fileUri, "text/plain")
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+
+        try {
+            startActivity(intent)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Toast.makeText(this@WebViewActivity, "파일을 열 수 있는 애플리케이션이 없습니다.", Toast.LENGTH_SHORT).show()
+        }
+    }
+
     override fun onDestroy() {
         super.onDestroy()
 
@@ -281,6 +296,8 @@ class WebViewActivity : AppCompatActivity() {
                 osw.close()
                 Log.d("DevWebViewApp", "File saved successfully")
                 Toast.makeText(this@WebViewActivity, "파일이 정상적으로 저장되었습니다.", Toast.LENGTH_SHORT).show()
+
+                openFile(file)
             } catch (e: Exception) {
                 e.printStackTrace()
                 Log.d("DevWebViewApp", "Failed to save file")
