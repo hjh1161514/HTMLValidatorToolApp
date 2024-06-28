@@ -2,5 +2,6 @@
     <string name="app_name">DevWebviewApp</string>
     <string name="main_title">HTML 검증도구 앱</string>
     <string name="main_button">WebView 열기</string>
+    <string name="main_log">Log 보기</string>
     <string name="webview_loading">로딩 중입니다...</string>
 </resources>
