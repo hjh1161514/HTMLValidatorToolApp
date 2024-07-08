@@ -4,12 +4,12 @@ import android.content.Intent
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.devwebviewapp.databinding.ActivityMainBinding
@@ -41,7 +41,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun checkPermission() {
-        // TODO x200 권한 처리
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
             != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this,
@@ -50,6 +49,7 @@ class MainActivity : AppCompatActivity() {
             )
         } else {
             initClickListener()
+            getVersion()
         }
     }
 
@@ -62,6 +62,7 @@ class MainActivity : AppCompatActivity() {
         if (requestCode == REQUEST_PERMISSION) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 initClickListener()
+                getVersion()
             } else {
                 finish()
                 Toast.makeText(this, "권한이 필요합니다.", Toast.LENGTH_SHORT).show()
@@ -99,6 +100,32 @@ class MainActivity : AppCompatActivity() {
         } catch (e: Exception) {
             e.printStackTrace()
             Toast.makeText(this, "파일을 열 수 없습니다.", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun getVersion() {
+        // Chrome 버전 가져오기
+        getPackageVersion("com.android.chrome")?.let {
+            binding.tvChromeVersion.text = getString(R.string.chrome_version).plus(it)
+        } ?: run {
+            Log.d("MainActivity", "Chrome is not installed.")
+        }
+
+        // WebView 버전 가져오기
+        getPackageVersion("com.google.android.webview")?.let {
+            binding.tvWebviewVersion.text = getString(R.string.webview_version).plus(it)
+        } ?: run {
+            Log.d("MainActivity", "WebView is not installed.")
+        }
+    }
+
+    private fun getPackageVersion(packageName: String): String? {
+        return try {
+            val pInfo: PackageInfo = packageManager.getPackageInfo(packageName, 0)
+            pInfo.versionName
+        } catch (e: PackageManager.NameNotFoundException) {
+            e.printStackTrace()
+            null
         }
     }
 }
