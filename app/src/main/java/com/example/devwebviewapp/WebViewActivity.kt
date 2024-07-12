@@ -96,7 +96,7 @@ class WebViewActivity : AppCompatActivity() {
                     view: WebView?,
                     request: WebResourceRequest?
                 ): Boolean {
-                    Log.d("DevWebViewApp","shouldOverrideUrlLoading > request :  ${request}" )
+                    Log.d("DevWebViewApp","shouldOverrideUrlLoading > request :  $request" )
                     return super.shouldOverrideUrlLoading(view, request)
                 }
 
@@ -117,12 +117,12 @@ class WebViewActivity : AppCompatActivity() {
                     resend: Message?
                 ) {
                     super.onFormResubmission(view, dontResend, resend)
-                    Log.d("DevWebViewApp","onFormResubmission > dontResend : ${dontResend} / resend : ${resend}" )
+                    Log.d("DevWebViewApp","onFormResubmission > dontResend : $dontResend / resend : $resend" )
                 }
 
                 override fun onLoadResource(view: WebView?, url: String?) {
                     super.onLoadResource(view, url)
-                    Log.d("DevWebViewApp","onLoadResource > url : ${url}" )
+                    Log.d("DevWebViewApp","onLoadResource > url : $url" )
                 }
 
                 override fun onPageCommitVisible(view: WebView?, url: String?) {
@@ -132,7 +132,7 @@ class WebViewActivity : AppCompatActivity() {
 
                 override fun onReceivedClientCertRequest(view: WebView?, request: ClientCertRequest?) {
                     super.onReceivedClientCertRequest(view, request)
-                    Log.d("DevWebViewApp","onReceivedClientCertRequest > request : ${request}" )
+                    Log.d("DevWebViewApp","onReceivedClientCertRequest > request : $request" )
                 }
 
                 override fun onReceivedError(
@@ -141,7 +141,7 @@ class WebViewActivity : AppCompatActivity() {
                     error: WebResourceError?
                 ) {
                     super.onReceivedError(view, request, error)
-                    Log.d("DevWebViewApp","onReceivedError > request : ${request} / error : ${error}" )
+                    Log.d("DevWebViewApp","onReceivedError > request : $request / error : $error" )
                 }
 
                 override fun onReceivedHttpAuthRequest(
@@ -151,7 +151,7 @@ class WebViewActivity : AppCompatActivity() {
                     realm: String?
                 ) {
                     super.onReceivedHttpAuthRequest(view, handler, host, realm)
-                    Log.d("DevWebViewApp","onReceivedHttpAuthRequest > host : ${host} / realm : ${realm}" )
+                    Log.d("DevWebViewApp","onReceivedHttpAuthRequest > host : $host / realm : $realm" )
                 }
 
                 override fun onReceivedHttpError(
@@ -160,7 +160,7 @@ class WebViewActivity : AppCompatActivity() {
                     errorResponse: WebResourceResponse?
                 ) {
                     super.onReceivedHttpError(view, request, errorResponse)
-                    Log.d("DevWebViewApp","onReceivedHttpError > request : ${request} / errorResponse : ${errorResponse}" )
+                    Log.d("DevWebViewApp","onReceivedHttpError > request : $request / errorResponse : $errorResponse" )
                 }
 
                 override fun onReceivedLoginRequest(
@@ -170,7 +170,7 @@ class WebViewActivity : AppCompatActivity() {
                     args: String?
                 ) {
                     super.onReceivedLoginRequest(view, realm, account, args)
-                    Log.d("DevWebViewApp","onReceivedLoginRequest > realm : ${realm} / account : ${account} / args : ${args}" )
+                    Log.d("DevWebViewApp","onReceivedLoginRequest > realm : $realm / account : $account / args : $args" )
                 }
 
                 override fun onReceivedSslError(
@@ -180,15 +180,15 @@ class WebViewActivity : AppCompatActivity() {
                 ) {
                     super.onReceivedSslError(view, handler, error)
                     handler!!.proceed();
-                    Log.d("DevWebViewApp","onReceivedSslError > error : ${error} " )
+                    Log.d("DevWebViewApp","onReceivedSslError > error : $error" )
                 }
 
                 override fun onRenderProcessGone(
                     view: WebView?,
                     detail: RenderProcessGoneDetail?
                 ): Boolean {
+                    Log.d("DevWebViewApp","onRenderProcessGone > detail : $detail" )
                     return super.onRenderProcessGone(view, detail)
-                    Log.d("DevWebViewApp","onRenderProcessGone > detail : ${detail} " )
                 }
 
                 override fun onSafeBrowsingHit(
@@ -198,30 +198,30 @@ class WebViewActivity : AppCompatActivity() {
                     callback: SafeBrowsingResponse?
                 ) {
                     super.onSafeBrowsingHit(view, request, threatType, callback)
-                    Log.d("DevWebViewApp","onSafeBrowsingHit > request : ${request} / threatType : ${threatType} / callback : ${callback}" )
+                    Log.d("DevWebViewApp","onSafeBrowsingHit > request : $request / threatType : $threatType / callback : $callback" )
                 }
 
                 override fun onScaleChanged(view: WebView?, oldScale: Float, newScale: Float) {
                     super.onScaleChanged(view, oldScale, newScale)
-                    Log.d("DevWebViewApp","onScaleChanged > oldScale : ${oldScale} / newScale : ${newScale}" )
+                    Log.d("DevWebViewApp","onScaleChanged > oldScale : $oldScale / newScale : $newScale" )
                 }
 
                 override fun onUnhandledKeyEvent(view: WebView?, event: KeyEvent?) {
                     super.onUnhandledKeyEvent(view, event)
-                    Log.d("DevWebViewApp","onUnhandledKeyEvent > event : ${event}" )
+                    Log.d("DevWebViewApp","onUnhandledKeyEvent > event : $event" )
                 }
 
                 override fun shouldInterceptRequest(
                     view: WebView?,
                     request: WebResourceRequest?
                 ): WebResourceResponse? {
+                    Log.d("DevWebViewApp","shouldInterceptRequest > request : $request" )
                     return super.shouldInterceptRequest(view, request)
-                    Log.d("DevWebViewApp","shouldInterceptRequest > request : ${request}" )
                 }
 
                 override fun shouldOverrideKeyEvent(view: WebView?, event: KeyEvent?): Boolean {
+                    Log.d("DevWebViewApp","shouldOverrideKeyEvent > event : $event" )
                     return super.shouldOverrideKeyEvent(view, event)
-                    Log.d("DevWebViewApp","shouldOverrideKeyEvent > event : ${event}" )
                 }
             }
 
