@@ -1,9 +1,13 @@
 <resources>
     <string name="app_name">DevWebviewApp</string>
-    <string name="main_title">HTML 검증도구 앱</string>
+    <string name="main_title">HTML 검증 도구</string>
     <string name="main_button">WebView 열기</string>
     <string name="main_log">Log 보기</string>
     <string name="webview_loading">로딩 중입니다…</string>
     <string name="chrome_version">chrome version : </string>
     <string name="webview_version">webview version : </string>
+    <string name="button_html">HTML 검증 도구</string>
+    <string name="button_webview">URL 입력</string>
+    <string name="input_web_url_title">URL 주소를 입력해 주세요</string>
+    <string name="input_web_url_hint">www.naver.com</string>
 </resources>

@@ -72,7 +72,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun initClickListener() {
         binding.btnOpenWebview.setOnClickListener {
-            startActivity(Intent(this, WebViewActivity::class.java))
+            val intent = Intent(this, WebViewActivity::class.java)
+            intent.putExtra("url", "")
+            startActivity(intent)
         }
 
         binding.btnOpenLog.setOnClickListener {
