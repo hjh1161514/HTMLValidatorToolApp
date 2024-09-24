@@ -226,7 +226,7 @@ class WebViewActivity : AppCompatActivity() {
             }
 
             addJavascriptInterface(AndroidBridge(), "android")
-            loadUrl(HTML_VALIDATOR_TOOL_URL)
+            loadUrl(intent.getStringExtra("url")!!)
 
             fileChooserLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
                 if (result.resultCode == Activity.RESULT_OK) {
